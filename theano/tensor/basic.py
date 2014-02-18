@@ -5260,7 +5260,7 @@ def batched_dot(x, y):
     return result
     
 
-def batched_tensordot(x, y, axes=2):
+def batched_tensordot(x, y, axes=3):
     """
     :param x: A Tensor with sizes e.g.: for  3D (dim1, dim3, dim2)
     :param y: A Tensor with sizes e.g.: for 3D (dim1, dim2, dim4)
@@ -5268,24 +5268,17 @@ def batched_tensordot(x, y, axes=2):
                  to sum over. If an array, it must have two array
                  elements containing the axes to sum over in each tensor.
 
-                 Note that the default value of 2 is not guaranteed to work
-                 for all values of a and b, and an error will be raised if
-                 that is the case. The reason for keeping the default is to
-                 maintain the same signature as numpy's tensordot function
-                 (and np.tensordot raises analogous errors for non-compatible
-                 inputs).
-
                  If an integer i, it is converted to an array containing
                  the last i dimensions of the first tensor and the first
                  i dimensions of the second tensor:
                      axes = [range(a.ndim - i, b.ndim), range(i)]
 
                  If an array, its two elements must contain compatible axes
-                 of the two tensors. For example, [[1, 2], [2, 0]] means sum
-                 over the 2nd and 3rd axes of a and the 3rd and 1st axes of b.
+                 of the two tensors. For example, [[1, 2], [2, 4]] means sum
+                 over the 2nd and 3rd axes of a and the 3rd and 5th axes of b.
                  (Remember axes are zero-indexed!) The 2nd axis of a and the
                  3rd axis of b must have the same shape; the same is true for
-                 the 3rd axis of a and the 1st axis of b.
+                 the 3rd axis of a and the 5th axis of b.
     :type axes: int or array-like of length 2
     This function computes the tensordot product between the two tensors, by
     iterating over the first dimension using scan.
